@@ -1,5 +1,5 @@
 NODE_INTERFACES:
-  launch: 1
+  launch: 0
   node_executable: interfaces_node
   package: interfaces
   respawn: true
@@ -29,7 +29,7 @@ NODE_RPM_CONVERTER:
   respawn: true
   respawn_delay: 5.0
 NODE_WHEEL_ODOMETRY:
-  launch: 0
+  launch: 1
   node_executable: wheel_odometry
   package: wheel_odometry
   respawn: true
