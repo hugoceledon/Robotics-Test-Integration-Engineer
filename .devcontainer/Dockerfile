@@ -136,6 +136,10 @@ RUN pip3 install -U pip \
     matplotlib\
     && rm -rf /home/koda/.cache/pip
 
+# -----------------------------------------------------------------------------
+# Added pulse Access
+RUN adduser root pulse-access
+
 # ------------------------------------------------------------------------------
 # ROS2 CONFIGS - ROS2 CONFIGS - ROS2 CONFIGS - ROS2 CONFIGS - ROS2 CONFIGS - ROS2
 
