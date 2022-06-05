@@ -132,6 +132,8 @@ void *Speaker::PlaySound()
      * https://docs.ros.org/en/foxy/Tutorials/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html#write-the-publisher-node
      ********************************************/
     std_msgs::msg::Bool::UniquePtr msg(new std_msgs::msg::Bool());
+    msg->data = false; // Sound starting...
+    m_done_pub->publish(std::move(msg)); // Publish
 
     /********************************************
      * END CODE
@@ -159,6 +161,9 @@ void *Speaker::PlaySound()
      ********************************************/
     // This is just for clean the variable name and re-initialize it.
     msg.reset(new std_msgs::msg::Bool());
+
+    msg->data = true; // Sound Ended.
+    m_done_pub->publish(std::move(msg)); // Publish done!
 
     /********************************************
      * END CODE
