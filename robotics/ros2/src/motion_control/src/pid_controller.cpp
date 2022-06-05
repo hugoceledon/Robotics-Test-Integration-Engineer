@@ -37,10 +37,9 @@ float PIDController::ThrottlePID(float ref_vx, float cur_vx, double dt)
      * 
      * Differential error is given by:
      * ( currentError - previousError ) / dt
-     * TODO: Max values control
      ********************************************/
     float output = (m_kp_thr * m_vx_prop_ek1) + ( m_vx_int_error * m_ki_thr) + ( m_kd_thr * ( m_vx_prop_ek1 - _prev_error ) / dt );
-    return output;
+    return (output >= m_max_linear_spd) ? m_max_linear_spd : output;
     /********************************************
      * END CODE
      *  ********************************************/
@@ -49,13 +48,7 @@ float PIDController::ThrottlePID(float ref_vx, float cur_vx, double dt)
 float PIDController::SteeringPID(float ref_wz, float cur_wz, double dt)
 {
     /********************************************
-     * DEFINE YOUR AMAZING PID CONTROLLER
-     * Find Documentation here:
-     * https://www.elprocus.com/the-working-of-a-pid-controller/
-     *
-     * FeedForward:
-     * https://zhuanlan.zhihu.com/p/382010500#:~:text=In%20many%20applications,dynamic%20models%20used.
-     * "Combined FeedForward and Feedback Control"
+     * PID Steering Controller
      ********************************************/
     m_steering_ctrl
 
