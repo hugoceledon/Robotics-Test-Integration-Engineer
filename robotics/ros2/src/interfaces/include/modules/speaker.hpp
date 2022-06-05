@@ -81,7 +81,7 @@ private:
         Publisher to ensure the sound as Done
     */
     /********************************************
-     * DEFINE THIS AMAZING PUBLISHER
+     * Boolean type Publisher for UniquePtr further use to ensure sound has ended playing.
      ********************************************/
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_done_pub;
     /********************************************

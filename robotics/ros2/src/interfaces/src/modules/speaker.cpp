@@ -26,9 +26,8 @@ Speaker::Speaker(rclcpp::NodeOptions &options) : Node("speaker", "interfaces", o
     // Subscribers
 
     /********************************************
-     * DEFINE YOUR AMAZING SUBSCRIBER
-     * Find Documentation here:
-     * https://docs.ros.org/en/foxy/Tutorials/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html#write-the-subscriber-node
+     * Amazing Speaker Subscriber
+     * Subscriber created to topic '/device/speaker/command' to handle audio files' stream playing.
      ********************************************/
     m_speaker_sub = this->create_subscription<std_msgs::msg::Int8>("/device/speaker/command", default_qos, std::bind(&Speaker::speakerCb, this, _1));
     /********************************************
@@ -102,7 +101,8 @@ void Speaker::speakerCb(const std_msgs::msg::Int8::SharedPtr msg)
         }
         /********************************************
          * PLAY A DEFAULT SOUND IF NOT FOUND THE TRACK FILE
-         * m_path = "(...)/track"
+         * m_path = "(...)/track";
+         * Default now is 2.wav when no soundtrack is found.
          ********************************************/
         else {
             readfd = open((m_path + "2.wav").c_str(), O_RDONLY);
@@ -137,7 +137,7 @@ void *Speaker::PlaySound()
      ********************************************/
     std_msgs::msg::Bool::UniquePtr msg(new std_msgs::msg::Bool());
     msg->data = false; // Sound starting...
-    m_done_pub->publish(std::move(msg)); // Publish
+    m_done_pub->publish(std::move(msg)); // Publish Unique Pointer with new message
 
     /********************************************
      * END CODE
@@ -167,7 +167,7 @@ void *Speaker::PlaySound()
     msg.reset(new std_msgs::msg::Bool());
 
     msg->data = true; // Sound Ended.
-    m_done_pub->publish(std::move(msg)); // Publish done!
+    m_done_pub->publish(std::move(msg)); // Publish Unique Pointer with new message true
 
     /********************************************
      * END CODE
