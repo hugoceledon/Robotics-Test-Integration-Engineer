@@ -155,6 +155,8 @@ ENV RCUTILS_COLORIZED_OUTPUT=1
 # ENV RCUTILS_CONSOLE_STDOUT_LINE_BUFFERED=1   # deprecated
 ENV RCUTILS_LOGGING_USE_STDOUT=1   
 ENV RCUTILS_LOGGING_BUFFERED_STREAM=1
+# PULSE AUDIO TRYING TO FIX ERROR
+ENV DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
 
 # -----------------------------------------------------------------------------
 # disable the creation of core dump files on a UNIX or Linux environment
