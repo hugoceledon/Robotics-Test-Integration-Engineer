@@ -197,7 +197,9 @@ def main(args=None) -> None:
     # TODO: Create a Thread for spin the node
     # Use the function spin_node
     # https://realpython.com/intro-to-python-threading/
-    #
+    spin_node_thread = threading.Thread(target = plotter_node.spin_node)
+    spin_node_thread.setDaemon(True) # So it stops with main thread
+    spin_node_thread.start() # started thread
     # End Code
     # ---------------------------------------------------------------------
 
