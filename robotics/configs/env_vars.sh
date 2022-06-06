@@ -37,3 +37,4 @@ export CHASSIS_PUBLISH_TIME=180             # [int][milliseconds] Period to publ
 # ----------------------------------------------------------------------------- 
 # SOUND DEVICE
 export SOUND_DEVICE="sysdefault:CARD=Generic"
+export DISPLAY=:0
