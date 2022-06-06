@@ -32,6 +32,7 @@ from matplotlib.animation import FuncAnimation
 
 
 class Plotter(Node):
+    alpha_value = 0.03
     def __init__(self) -> None:
         """!
         Object class constructor
@@ -40,9 +41,18 @@ class Plotter(Node):
         super().__init__("plotter_node")
 
         # =============================================================================
+        # Adding some style
+        # =============================================================================
+        plt.style.use("seaborn-dark")
+        for param in ['figure.facecolor', 'axes.facecolor', 'savefig.facecolor']:
+            plt.rcParams[param] = '#212946'  # bluish dark grey
+        for param in ['text.color', 'axes.labelcolor', 'xtick.color', 'ytick.color']:
+            plt.rcParams[param] = '0.9'  # very light grey
+        # =============================================================================
         # Define Plotter Variables
         # =============================================================================
         self.fig, self.ax = plt.subplots(1, 3)
+        self.ax.grid(color='#2A3459') # Style
         self.fig.suptitle("Amazing Plotter", fontsize=16)
         self.fig.set_size_inches(18.5, 10.5)
         # =============================================================================
@@ -51,9 +61,13 @@ class Plotter(Node):
 
         # Linear
         (self.control_lin_ln,) = self.ax[0].plot(
-            [], [], "r", label="Control Linear Signal"
+            [], [], "r", label="Control Linear Signal", 
+            marker='o', alpha=self.alpha_value,
         )
-        (self.error_linear_ln,) = self.ax[0].plot([], [], "b", label="Linear Error")
+        (self.error_linear_ln,) = self.ax[0].plot(
+            [], [], "b", label="Linear Error", 
+            marker='o', alpha=self.alpha_value,
+        )
         self.controller_lin_lns = [self.control_lin_ln, self.error_linear_ln]
         self.ax[0].legend()
         self.x_linear_data, self.y_linear_data = [[], []], [[], []]
@@ -61,9 +75,13 @@ class Plotter(Node):
         # Angular
 
         (self.control_ang_ln,) = self.ax[1].plot(
-            [], [], "r", label="Control Angular Signal"
+            [], [], "r", label="Control Angular Signal", 
+            marker='o', alpha=self.alpha_value,
         )
-        (self.error_angular_ln,) = self.ax[1].plot([], [], "b", label="Angular Error")
+        (self.error_angular_ln,) = self.ax[1].plot(
+            [], [], "b", label="Angular Error", 
+            marker='o', alpha=self.alpha_value,
+        )
         self.controller_ang_lns = [self.control_ang_ln, self.error_angular_ln]
         self.ax[1].legend()
         self.x_linear_data, self.y_linear_data = [[], []], [[], []]
