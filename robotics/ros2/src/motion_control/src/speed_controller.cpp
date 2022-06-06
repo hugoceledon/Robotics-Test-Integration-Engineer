@@ -111,7 +111,22 @@ void SpeedController::Controller()
     // Use this message
     auto output_error_msg = std::make_unique<geometry_msgs::msg::TwistStamped>();
 
-    // How could I publish a message of type std::shared_ptr?
+    /********************************************
+     * Only fill the header stamp field in the TwistStamped message
+     ********************************************/
+    rclcpp::Time h_stamp = this->now(); // Like at : SpeedController::Controller() line[89]
+    output_error_msg->header.stamp = h_stamp;
+    /********************************************
+     * Errors
+     * reference velocities minus current velocities
+     ********************************************/
+    float linear_error = vx_ref - m_robot_twist.twist.linear.x;
+    output_error_msg->twist.linear.x = linear_error;
+    float angular_error = ang_wz - m_robot_twist.twist.angular.z;
+    output_error_msg->twist.linear.z = angular_error;
+
+    // Publish on m_ctrl_error_pub publisher
+    m_ctrl_error_pub->publish(std::move(output_error_msg));
     /********************************************
      * END CODE
      *  ********************************************/
