@@ -248,38 +248,77 @@ Reference Image
 Respond below in the same solution branch every question. In case your answer isn't in this file, it'll not be valid:
 
 1. [C++] What is the mean of the number "15" used in the `pthread_kill` inside the destructor method?
-
+```
+In the statement ‘pthread_kill(pthread_id, s);’ the arguments are the thread’s id and s the signal sent to the thread. In this case, a 15 is sent which means SIGTERM: is a request to the program to terminate
+```
 2. [C++] Why are we using `UniquePointer` instead of `SharedPointers` to publish a ROS2 message?
-
+```
+With Unique Pointers, there can be at most ONE unique_ptr pointing at any one resourse. With Shared pintes there can be more than of the same type. It is used so that the resourse who gets the value of the pointer (using ‘std::move(<pointer>)’) claim ownership over the value, avoiding the necessity of making delete calls.
+```
 3. [Logic] Why are we using an m_multi_sound variable? Explain ...
-
+```
+To avoid playing ambient sound while another sound is being played. Is used as a flag for the speakers code so that when  m_multi_sound == 1, the ambient sound is muted.
+```
 4. [C++] Why are we freeing the memory allocated by raw pointer "buff" variable and not freeing the memory allocated by the Shared and Unique Pointers? (HARD)
-
+```
+You need to clear the buffer “buff” as it stands for a raw pointer and is not deleted or transferred its ownership as in Unique Pointers. The Shared pointer must stay as is so when subscribers ask for the data twice before any other changes, the Publisher does not return a null pointer (my guess).
+```
 5. [C++] Why should we use a "member variable" (persistent over the class) to storage the integral error? `m_vx_int_error`
-
+```
+Because integral error must be accumulated so the discrete integral operation can be calculated and so that it can be reset to zero when asked for vehicle’s full stop.
+```
 6. [Control] What is the function of the FeedForward controller?
-
+```
+Just using a PID feedback controller ia a correct approach if the vehicle is on the move constantly because is driven by errors correction (PID’s purpose). The PID’s response lags the feedforward approach, which immediately applies the relevant input reference velocity, fact that can be useful to quickly and reliably fit the reference velocity’s curve to perform.
+Ref: https://zhuanlan.zhihu.com/p/382010500#:~:text=In%20many%20applications,dynamic%20models%20used
+```
 7. [ROS2] What is the purpose of `CascadeLifecycleNode` type nodes?
+```
+Cascade_lyfecyle Nodes provide a mechanism to define states in a node so that its life cycle can be better controlled. This package helps to interconnect several nodes and perform actions over all of them at the same time. It can be used also to “put to sleep” certain nodes when needed.
 
+Ref: https://github.com/fmrico/cascade_lifecycle
+```
 8. [Robotics] Why is a global and a local `Odometry` calculated?
-
+```
+Local is calculated based on the rpms and wheel radius’ values so discrete linear velocity is calculated. Using the “float kin_omega = (R_vel - L_vel) / m_chassis_track;” the slip factor can be estimated and corrected so that the global values, which are the ones to be published to different subscribers such as motion_control, can have the corrected value of the velocity.
+```
 9. [Robotics] If the robot has 4 differential wheels, what type of chassis is it?
-
+```
+A 4WD Chassis.
+```
 10. [Docker] Explain with your own words what is the instructions `apt-get autoremove && apt-get clean -y for?`
+```
+Apt-get autoremove deletes no longer needed  packages because of the removal of a previously installed package that depended on it. So lets say package B depends on package A. You don’t have any of them installed on your computer. You apt install package B and apt automatically detects a dependency and also installs package A. Now lets say you dont need package B any more so you uninstall it but package A is still installed on your computer and no other packages need it. If you run  “apt-get autoremove” package A, unused, is going to be uninstalled for it’s only purpose was to serve the package’s B dependency.  
 
+The && statements says it will run the next command after finishing “apt-get autoremove”. 
+
+Now “apt-get clean -y” clears cache of all the packages and dependencies you have installed using apt install. The -y argument helps so you don't have to say yes to the terminal to delete cache, it assumes you’ll say yes to all.
+```
 11. [Docker] If you modify a layer what happen with the previous and the next ones?
-
+```
+If you choose to rebuild all without cache (not recommended because it takes a lot of time) it will run every single line again. If you just rebuild with cache, it will load everything up to the layer you modified and build from that line forward (a.k.a. the next ones).
+```
 12. [Docker] Can we change the basic image (`FROM ubuntu:20.04`) from the docker file to another?
-
+```
+Sure, there are a lot of public, commercial and private docker images that can be used with docker technology. Some of them, for sure, based on  ubuntu:20.04 also.
+```
 13. [C++] What is the [libsoft_speed.a](../robotics/ros2/src/motion_control/lib/) file and what is it for?
-
+```
+An A file contains a library of functions and headers that may be referenced by a C/C++ source file. It may store only a few functions or may include an entire library of functions, such as a 3D modeling engine. A files are typically created by the GNU ar utility. (Ref: https://fileinfo.com/extension/a). It is used to enable a soft curve to drive the reference values for the controllers, this ensures quality robot movements and reduction of current peaks which can help in energy management and reduction in maintenance and repair instances for motors and moving parts.
+```
 14. [Python] Why should we use a thread to spin the node?
-
+```
+So it can keep on checking for the topic subscriptions in order to update the class that renders the matplotlib figure’s animation.
+```
 15. [Python] Why is the limit on the Y-RPM graph 170?
-
+```
+Because the maximum value it can get is 165 as env_vars.sh and code limits it to be like that (export CONVERTER_WHEEL_MAX_RPM=165.0).
+```
 Next questions are after you finish the project, it doesn't give points, but we really appreciate you feedback:
 * What do you think about this project? Is it hard or enough? Is it to complicated, is it well structure, explanations and instructions are clear?
-
+```
+I personally believe it was a challenging and enriching experience just to be able to try to perform this project. It shows Kiwi is using state of the art edge-technology for it’s solutions, hence the success I see today, predict and wish for the Kiwi team. Yes, it is Hard enough, for me it was a challenge since just a few weeks ago I started learning some of ROS cappabilities. It is well structured with clear instructions and further challenges that, for what I saw, evaluate not only the coding and knowledge skills but also the use of git and docker technologies as the “social network” of development. I really appreciate that you have taken me into account, regardless of the outcome of this process, cheers and success Kiwi team.
+```
 ---
 <!-- ---------------------------------------------------------------------- -->
 ## **EXTRA-HOMEWORK**
