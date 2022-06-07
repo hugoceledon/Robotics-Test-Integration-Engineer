@@ -273,7 +273,7 @@ void WheelOdometry::CalculateOdometry()
     float delta_X_global = X_dot_global*dt;
     float delta_Y_global = Y_dot_global*dt;
 
-    // Added offset global deltas to m_local_wheel_odom_msg.pose.pose.position.?
+    // Added offset global deltas to m_global_wheel_odom_msg.pose.pose.position.?
     float X_global = m_global_wheel_odom_msg.pose.pose.position.x + delta_X_global;
     float Y_global = m_global_wheel_odom_msg.pose.pose.position.y + delta_Y_global;
 
